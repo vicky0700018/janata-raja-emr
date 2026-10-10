@@ -44,7 +44,7 @@ export function loadDb() {
 const Ctx = createContext(null);
 export const useHMS = () => useContext(Ctx);
 
-export function HMSProvider({ children, session, setSession }) {
+export function HMSProvider({ children, session, setSession, go }) {
   const [db, setDb] = useState(loadDb);
   const dbRef = useRef(db);
   dbRef.current = db;
@@ -149,7 +149,7 @@ export function HMSProvider({ children, session, setSession }) {
     return { P, D, pName: (id) => P[id]?.name || (id ? id : "—"), dName: (id) => D[id]?.name || (id ? id : "—") };
   }, [db]);
 
-  const value = { db, session, setSession, toast, log, nextId, upsert, patch, remove, commit, notify, setSettings, replaceAll, resetAll, ...helpers, settings: db.settings };
+  const value = { db, go, session, setSession, toast, log, nextId, upsert, patch, remove, commit, notify, setSettings, replaceAll, resetAll, ...helpers, settings: db.settings };
   return (
     <Ctx.Provider value={value}>
       {children}
